@@ -3,7 +3,7 @@ cmake_minimum_required (VERSION 3.10...3.22)
 
 project (benchmark VERSION 1.8.3 LANGUAGES CXX)
 
-option(BENCHMARK_ENABLE_TESTING "Enable testing of the benchmark library." ON)
+option(BENCHMARK_ENABLE_TESTING "Enable testing of the benchmark library." OFF)
 option(BENCHMARK_ENABLE_EXCEPTIONS "Enable the use of exceptions in the benchmark library." ON)
 option(BENCHMARK_ENABLE_LTO "Enable link time optimisation of the benchmark library." OFF)
 option(BENCHMARK_USE_LIBCXX "Build and test using libc++ as the standard library." OFF)
@@ -36,8 +36,8 @@ option(BENCHMARK_DOWNLOAD_DEPENDENCIES "Allow the downloading and in-tree buildi
 
 # This option can be used to disable building and running unit tests which depend on gtest
 # in cases where it is not possible to build or find a valid version of gtest.
-option(BENCHMARK_ENABLE_GTEST_TESTS "Enable building the unit tests which depend on gtest" ON)
-option(BENCHMARK_USE_BUNDLED_GTEST "Use bundled GoogleTest. If disabled, the find_package(GTest) will be used." ON)
+option(BENCHMARK_ENABLE_GTEST_TESTS "Enable building the unit tests which depend on gtest" OFF)
+option(BENCHMARK_USE_BUNDLED_GTEST "Use bundled GoogleTest. If disabled, the find_package(GTest) will be used." OFF)
 
 option(BENCHMARK_ENABLE_LIBPFM "Enable performance counters provided by libpfm" OFF)
 
@@ -184,7 +184,7 @@ else()
       add_cxx_compiler_flag(-Werror)
   endif()
   if (NOT BENCHMARK_ENABLE_TESTING)
-    # Disable warning when compiling tests as gtest does not use 'override'.
+    # Disable warning when compiling tests as  does not use 'override'.
     add_cxx_compiler_flag(-Wsuggest-override)
   endif()
   add_cxx_compiler_flag(-pedantic)
@@ -266,7 +266,7 @@ else()
     BENCHMARK_CXX_FLAGS_COVERAGE
     BENCHMARK_EXE_LINKER_FLAGS_COVERAGE
     BENCHMARK_SHARED_LINKER_FLAGS_COVERAGE)
-  set(CMAKE_BUILD_TYPE "${CMAKE_BUILD_TYPE}" CACHE STRING
+  set(CMAKE_BUILD_TYPE Release CACHE STRING
     "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel Coverage.")
   add_cxx_compiler_flag(--coverage COVERAGE)
 endif()
